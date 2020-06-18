@@ -1,6 +1,6 @@
 ﻿namespace OOP
 {
-    partial class IssueBooksForm
+    partial class btnIssueBook
     {
         /// <summary>
         /// Required designer variable.
@@ -28,12 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(IssueBooksForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(btnIssueBook));
             this.label6 = new System.Windows.Forms.Label();
             this.dtpBorrowDate = new System.Windows.Forms.DateTimePicker();
             this.cbBooks = new System.Windows.Forms.ComboBox();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnIssue = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -49,15 +48,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.bookManagmentDataSet1 = new OOP.BookManagmentDataSet1();
-            this.booksBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.booksTableAdapter = new OOP.BookManagmentDataSet1TableAdapters.booksTableAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bookManagmentDataSet1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.booksBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // label6
@@ -80,27 +74,26 @@
             // 
             // cbBooks
             // 
-            this.cbBooks.DataSource = this.booksBindingSource;
-            this.cbBooks.DisplayMember = "bookName";
             this.cbBooks.FormattingEnabled = true;
             this.cbBooks.Location = new System.Drawing.Point(410, 310);
             this.cbBooks.Name = "cbBooks";
             this.cbBooks.Size = new System.Drawing.Size(222, 21);
             this.cbBooks.TabIndex = 27;
-            this.cbBooks.ValueMember = "bookAuthor";
+            this.cbBooks.ValueMember = "bookID";
             // 
-            // button3
+            // btnIssue
             // 
-            this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(36)))), ((int)(((byte)(55)))));
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button3.ForeColor = System.Drawing.Color.Red;
-            this.button3.Location = new System.Drawing.Point(668, 397);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(129, 50);
-            this.button3.TabIndex = 26;
-            this.button3.Text = "Issue Book";
-            this.button3.UseVisualStyleBackColor = false;
+            this.btnIssue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(36)))), ((int)(((byte)(55)))));
+            this.btnIssue.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnIssue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.btnIssue.ForeColor = System.Drawing.Color.Red;
+            this.btnIssue.Location = new System.Drawing.Point(668, 397);
+            this.btnIssue.Name = "btnIssue";
+            this.btnIssue.Size = new System.Drawing.Size(129, 50);
+            this.btnIssue.TabIndex = 26;
+            this.btnIssue.Text = "Issue Book";
+            this.btnIssue.UseVisualStyleBackColor = false;
+            this.btnIssue.Click += new System.EventHandler(this.btnIssue_Click);
             // 
             // label5
             // 
@@ -268,21 +261,7 @@
             this.pictureBox1.TabIndex = 16;
             this.pictureBox1.TabStop = false;
             // 
-            // bookManagmentDataSet1
-            // 
-            this.bookManagmentDataSet1.DataSetName = "BookManagmentDataSet1";
-            this.bookManagmentDataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // booksBindingSource
-            // 
-            this.booksBindingSource.DataMember = "books";
-            this.booksBindingSource.DataSource = this.bookManagmentDataSet1;
-            // 
-            // booksTableAdapter
-            // 
-            this.booksTableAdapter.ClearBeforeFill = true;
-            // 
-            // IssueBooksForm
+            // btnIssueBook
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -292,7 +271,7 @@
             this.Controls.Add(this.label6);
             this.Controls.Add(this.dtpBorrowDate);
             this.Controls.Add(this.cbBooks);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.btnIssue);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -304,7 +283,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "IssueBooksForm";
+            this.Name = "btnIssueBook";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "IssueBooksForm";
             this.Load += new System.EventHandler(this.IssueBooksForm_Load);
@@ -313,8 +292,6 @@
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bookManagmentDataSet1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.booksBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -325,7 +302,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.DateTimePicker dtpBorrowDate;
         private System.Windows.Forms.ComboBox cbBooks;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnIssue;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
@@ -341,8 +318,5 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private BookManagmentDataSet1 bookManagmentDataSet1;
-        private System.Windows.Forms.BindingSource booksBindingSource;
-        private BookManagmentDataSet1TableAdapters.booksTableAdapter booksTableAdapter;
     }
 }

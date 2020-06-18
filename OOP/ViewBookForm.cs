@@ -39,10 +39,10 @@ namespace OOP
 
         private void dgvViewBooks_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            try
+            if (dgvViewBooks.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString() != "")
             {
-                int id = int.Parse(dgvViewBooks.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
-
+                int id = int.Parse(dgvViewBooks.Rows[e.RowIndex].Cells[0].Value.ToString());
+               
                 panelBookAlter.Visible = true;
 
                 DataSet mDataSet = new DataSet();
@@ -55,8 +55,8 @@ namespace OOP
                 tbBookQuantity.Text = mDataSet.Tables[0].Rows[0][4].ToString();
 
                 this.id = Int64.Parse(mDataSet.Tables[0].Rows[0][0].ToString());
-            } 
-            catch
+            }
+            else
             {
                 MessageBox.Show("Wrong selection!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ using System.Windows.Forms;
 
 namespace OOP
 {
-    public partial class IssueBooksForm : Form
+    public partial class btnIssueBook : Form
     {
 
         private DbHandler dbHandler = null;
@@ -21,16 +22,16 @@ namespace OOP
 
         private UserHelper userHelper = UserHelper.getInstance;
 
-        public IssueBooksForm()
+        public btnIssueBook()
         {
             InitializeComponent();
         }
 
         private void IssueBooksForm_Load(object sender, EventArgs e)
         {
-            // TODO: This line of code loads data into the 'bookManagmentDataSet1.books' table. You can move, or remove it, as needed.
-            this.booksTableAdapter.Fill(this.bookManagmentDataSet1.books);
             dbHandler = new DbHandler(values.getConnectionString());
+
+            this.BinData();
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -78,6 +79,46 @@ namespace OOP
             tbStudentClass.Text = "";
             tbStudentName.Text = "";
             dtpBorrowDate.Value = DateTime.Now;
+        }
+        private void btnIssue_Click(object sender, EventArgs e)
+        {
+            DataSet mDataSet = new DataSet();
+
+            string selectedItem = cbBooks.SelectedValue.ToString();
+            userHelper.bookID = int.Parse(selectedItem);
+
+            mDataSet = dbHandler.Select("SELECT * FROM books WHERE bookID=" + userHelper.bookID);
+
+            int bookQuantitiy = int.Parse(mDataSet.Tables[0].Rows[0][4].ToString());
+
+            if (bookQuantitiy > 0)
+            {
+                dbHandler.Insert("INSERT INTO BookBorrow (takenDate, loginID, bookID, studentID) VALUES ('" + dtpBorrowDate.Value.ToShortDateString()+ "'," + userHelper.userID + "," + userHelper.bookID + "," + userHelper.studentID + ")");
+
+                bookQuantitiy = bookQuantitiy - 1;
+
+                dbHandler.Update("UPDATE books SET bookQuantity=" + bookQuantitiy + "WHERE bookID =" + userHelper.bookID);
+
+                MessageBox.Show("Book issued!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Selected book is no more", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void BinData()
+        {
+            DataSet mDataSet = new DataSet();
+
+            mDataSet = dbHandler.Select("SELECT * FROM books");
+
+            cbBooks.DataSource = mDataSet.Tables[0];
+
+            cbBooks.ValueMember = "bookID";
+            cbBooks.DisplayMember = "bookName";
+
+            cbBooks.Enabled = true;
         }
     }
 }

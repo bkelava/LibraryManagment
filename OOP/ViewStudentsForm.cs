@@ -49,10 +49,10 @@ namespace OOP
 
         private void dgvViewStudents_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            try
+            if (dgvViewStudents.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString() != "")
             {
                 setComboBoxData();
-                int id = int.Parse(dgvViewStudents.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
+                int id = int.Parse(dgvViewStudents.Rows[e.RowIndex].Cells[0].Value.ToString());
 
                 panelUpdateStudents.Visible = true;
 
@@ -63,7 +63,7 @@ namespace OOP
                 tbStudentNameUpdate.Text = mDataSet.Tables[0].Rows[0][1].ToString();
                 dtpBirthdateUpdate.Value = DateTime.Parse(mDataSet.Tables[0].Rows[0][2].ToString());
 
-                if (mDataSet.Tables[0].Rows[0][3].ToString() == "Male") 
+                if (mDataSet.Tables[0].Rows[0][3].ToString() == "Male")
                 {
                     cbGenderUpdate.SelectedValue = "Male";
                 }
@@ -76,7 +76,7 @@ namespace OOP
 
                 this.id = Int64.Parse(mDataSet.Tables[0].Rows[0][0].ToString());
             }
-            catch
+            else
             {
                 MessageBox.Show("Wrong selection!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

@@ -16,4 +16,4 @@ C:\Users\Kelava\source\repos\OOP\OOP\obj\Debug\OOP.csproj.CoreCompileInputs.cach
 C:\Users\Kelava\source\repos\OOP\OOP\obj\Debug\OOP.exe
 C:\Users\Kelava\source\repos\OOP\OOP\obj\Debug\OOP.pdb
 C:\Users\Kelava\source\repos\OOP\OOP\obj\Debug\OOP.csprojAssemblyReference.cache
-C:\Users\Kelava\source\repos\OOP\OOP\obj\Debug\OOP.IssueBooksForm.resources
+C:\Users\Kelava\source\repos\OOP\OOP\obj\Debug\OOP.btnIssueBook.resources

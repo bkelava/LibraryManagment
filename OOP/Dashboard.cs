@@ -58,7 +58,7 @@ namespace OOP
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            programManager.OpenScreen(new IssueBooksForm());
+            programManager.OpenScreen(new btnIssueBook());
         }
     }
 }

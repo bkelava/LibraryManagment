@@ -33,14 +33,9 @@ namespace OOP
 
         private void btnSaveClick()
         {
-            string bookName = tbBookName.Text;
-            string bookAuthor = tbBookAuthor.Text;
-            string bookPublication = tbBookPublication.Text;
-            string bookQuantity = tbBookQuantity.Text;
-
-            if (bookName.Length > 0 && bookAuthor.Length > 0 && bookPublication.Length > 0 && bookQuantity.Length > 0)
+            if (tbBookName.Text != "" && tbBookAuthor.Text != "" && tbBookPublication.Text != "" && tbBookQuantity.Text != "")
             {
-                string sqlQuery = "INSERT INTO books (bookName, bookAuthor, bookPublication, bookQuantity) VALUES ('" + bookName + "', '" + bookAuthor + "', '" + bookPublication + "', '" + bookQuantity + "')";
+                string sqlQuery = "INSERT INTO books (bookName, bookAuthor, bookPublication, bookQuantity) VALUES ('" + tbBookName.Text + "', '" + tbBookAuthor.Text + "', '" + tbBookPublication.Text + "', " + int.Parse(tbBookQuantity.Text) + ")";
                 dbHandler.Insert(sqlQuery);
                 MessageBox.Show("Book Inserted", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 resetFields();
