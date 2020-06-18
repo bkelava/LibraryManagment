@@ -6,7 +6,9 @@ C:\Users\Kelava\source\repos\OOP\OOP\bin\Debug\OOP.pdb
 C:\Users\Kelava\source\repos\OOP\OOP\obj\Debug\OOP.AddBookForm.resources
 C:\Users\Kelava\source\repos\OOP\OOP\obj\Debug\OOP.Dashboard.resources
 C:\Users\Kelava\source\repos\OOP\OOP\obj\Debug\OOP.Form1.resources
+C:\Users\Kelava\source\repos\OOP\OOP\obj\Debug\OOP.btnIssueBook.resources
 C:\Users\Kelava\source\repos\OOP\OOP\obj\Debug\OOP.Properties.Resources.resources
+C:\Users\Kelava\source\repos\OOP\OOP\obj\Debug\OOP.ReturnBookForm.resources
 C:\Users\Kelava\source\repos\OOP\OOP\obj\Debug\OOP.SignUp.resources
 C:\Users\Kelava\source\repos\OOP\OOP\obj\Debug\OOP.StudentForm.resources
 C:\Users\Kelava\source\repos\OOP\OOP\obj\Debug\OOP.ViewBookForm.resources
@@ -15,5 +17,3 @@ C:\Users\Kelava\source\repos\OOP\OOP\obj\Debug\OOP.csproj.GenerateResource.cache
 C:\Users\Kelava\source\repos\OOP\OOP\obj\Debug\OOP.csproj.CoreCompileInputs.cache
 C:\Users\Kelava\source\repos\OOP\OOP\obj\Debug\OOP.exe
 C:\Users\Kelava\source\repos\OOP\OOP\obj\Debug\OOP.pdb
-C:\Users\Kelava\source\repos\OOP\OOP\obj\Debug\OOP.csprojAssemblyReference.cache
-C:\Users\Kelava\source\repos\OOP\OOP\obj\Debug\OOP.btnIssueBook.resources

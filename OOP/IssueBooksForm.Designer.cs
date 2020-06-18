@@ -74,6 +74,7 @@
             // 
             // cbBooks
             // 
+            this.cbBooks.DisplayMember = "bookID";
             this.cbBooks.FormattingEnabled = true;
             this.cbBooks.Location = new System.Drawing.Point(410, 310);
             this.cbBooks.Name = "cbBooks";
@@ -283,6 +284,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "btnIssueBook";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "IssueBooksForm";

@@ -27,6 +27,7 @@ namespace OOP
         public int userID;
         public int bookID;
         public int studentID;
+        public int borrowBookID;
 
         /*public int getUserID()
         {

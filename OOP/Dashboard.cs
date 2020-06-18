@@ -60,5 +60,10 @@ namespace OOP
         {
             programManager.OpenScreen(new btnIssueBook());
         }
+
+        private void returnBooksToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            programManager.OpenScreen(new ReturnBookForm());
+        }
     }
 }

@@ -74,7 +74,10 @@ namespace OOP
         private void login()
         {
             mDataSet = new DataSet();
-            mDataSet = dbHandler.Select("SELECT * FROM loginTable WHERE username = '" + tbUserName.Text + "' AND password = '" + tbPassword.Text + "'");
+
+            string userName = tbUserName.Text;
+            string password = tbPassword.Text;
+            mDataSet = dbHandler.Select("SELECT * FROM loginTable WHERE username = '" + userName + "' AND password = '" + password + "'");
 
             userHelper.userID = int.Parse( mDataSet.Tables[0].Rows[0][0].ToString());
 
