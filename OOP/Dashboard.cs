@@ -15,7 +15,6 @@ namespace OOP
     {
         public bool isOpened = false;
 
-        ProgramManager programManager = new ProgramManager();
         public Dashboard()
         {
             InitializeComponent();
@@ -23,7 +22,7 @@ namespace OOP
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.programManager.Exit();
+            ProgramManager.getInstance().Exit();
         }
 
         private void Dashboard_Load(object sender, EventArgs e)
@@ -33,37 +32,37 @@ namespace OOP
 
         private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.programManager.LogOut(this, new Form1());
+            ProgramManager.getInstance().LogOut(this, new Form1());
         }
 
         private void addNewBookToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.programManager.OpenScreen(new AddBookForm());
+            ProgramManager.getInstance().OpenScreen(new AddBookForm());
         }
 
         private void viewBooksToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.programManager.OpenScreen(new ViewBookForm());
+            ProgramManager.getInstance().OpenScreen(new ViewBookForm());
         }
 
         private void addStudentToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            programManager.OpenScreen(new StudentForm());
+            ProgramManager.getInstance().OpenScreen(new StudentForm());
         }
 
         private void viewStudentInfoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            programManager.OpenScreen(new ViewStudentsForm());
+            ProgramManager.getInstance().OpenScreen(new ViewStudentsForm());
         }
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            programManager.OpenScreen(new btnIssueBook());
+            ProgramManager.getInstance().OpenScreen(new btnIssueBook());
         }
 
         private void returnBooksToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            programManager.OpenScreen(new ReturnBookForm());
+            ProgramManager.getInstance().OpenScreen(new ReturnBookForm());
         }
     }
 }

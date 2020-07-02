@@ -16,12 +16,6 @@ namespace OOP
 
         private DbHandler dbHandler = null;
 
-        private Values values = new Values();
-
-        private ProgramManager programManager = new ProgramManager();
-
-        private UserHelper userHelper = UserHelper.getInstance;
-
         public btnIssueBook()
         {
             InitializeComponent();
@@ -29,8 +23,6 @@ namespace OOP
 
         private void IssueBooksForm_Load(object sender, EventArgs e)
         {
-            dbHandler = new DbHandler(values.getConnectionString());
-
             this.BinData();
         }
 
@@ -40,11 +32,11 @@ namespace OOP
 
             if (tbEnrollmentKey.Text != "")
             {
-                mDataSet = dbHandler.Select("SELECT * FROM student WHERE enrollment='" + tbEnrollmentKey.Text + "'");
+                mDataSet = DbHandler.getInstance().Select("SELECT * FROM student WHERE enrollment='" + tbEnrollmentKey.Text + "'");
 
                 if (mDataSet.Tables[0].Rows.Count != 0)
                 {
-                    userHelper.studentID = int.Parse(mDataSet.Tables[0].Rows[0][0].ToString());
+                    UserHelper.getInstance().studentID = int.Parse(mDataSet.Tables[0].Rows[0][0].ToString());
 
                     tbStudentName.Text = mDataSet.Tables[0].Rows[0][1].ToString();
                     tbStudentClass.Text = mDataSet.Tables[0].Rows[0][4].ToString();
@@ -65,7 +57,7 @@ namespace OOP
 
         private void btnX_Click(object sender, EventArgs e)
         {
-            programManager.Close(this);
+            ProgramManager.getInstance().Close(this);
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
@@ -85,19 +77,19 @@ namespace OOP
             DataSet mDataSet = new DataSet();
 
             string selectedItem = cbBooks.SelectedValue.ToString();
-            userHelper.bookID = int.Parse(selectedItem);
+            UserHelper.getInstance().bookID = int.Parse(selectedItem);
 
-            mDataSet = dbHandler.Select("SELECT * FROM books WHERE bookID=" + userHelper.bookID);
+            mDataSet = dbHandler.Select("SELECT * FROM books WHERE bookID=" + UserHelper.getInstance().bookID);
 
             int bookQuantitiy = int.Parse(mDataSet.Tables[0].Rows[0][4].ToString());
 
             if (bookQuantitiy > 0)
             {
-                dbHandler.Insert("INSERT INTO BookBorrow (takenDate, loginID, bookID, studentID) VALUES ('" + dtpBorrowDate.Value.ToShortDateString()+ "'," + userHelper.userID + "," + userHelper.bookID + "," + userHelper.studentID + ")");
+                dbHandler.Insert("INSERT INTO BookBorrow (takenDate, loginID, bookID, studentID) VALUES ('" + dtpBorrowDate.Value.ToShortDateString()+ "'," + UserHelper.getInstance().userID + "," + UserHelper.getInstance().bookID + "," + UserHelper.getInstance().studentID + ")");
 
                 bookQuantitiy = bookQuantitiy - 1;
 
-                dbHandler.Update("UPDATE books SET bookQuantity=" + bookQuantitiy + "WHERE bookID =" + userHelper.bookID);
+                dbHandler.Update("UPDATE books SET bookQuantity=" + bookQuantitiy + "WHERE bookID =" + UserHelper.getInstance().bookID);
 
                 MessageBox.Show("Book issued!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -111,7 +103,7 @@ namespace OOP
         {
             DataSet mDataSet = new DataSet();
 
-            mDataSet = dbHandler.Select("SELECT * FROM books");
+            mDataSet = DbHandler.getInstance().Select("SELECT * FROM books");
 
             cbBooks.DataSource = mDataSet.Tables[0];
 

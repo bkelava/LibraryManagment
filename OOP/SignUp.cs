@@ -13,11 +13,8 @@ namespace OOP
 {
     public partial class SignUp : Form
     {
-        Values values = new Values();
 
         private DbHandler dbHandler = null;
-
-        ProgramManager programManager = new ProgramManager();
 
         public SignUp()
         {
@@ -28,12 +25,12 @@ namespace OOP
 
 
         {
-            programManager.Exit();
+            ProgramManager.getInstance().Exit();
         }
 
         private void SignUp_Load(object sender, EventArgs e)
         {
-            dbHandler = new DbHandler(values.getConnectionString());
+            //empty
         }
 
         private void btnSignUp_Click(object sender, EventArgs e)
@@ -57,7 +54,7 @@ namespace OOP
                     {
                         dbHandler.Insert("INSERT INTO loginTable (username, password) VALUES ('" + username + "', '" + password + "')");
                         MessageBox.Show("User successfully registered!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        programManager.SwitchScreen(this, new Form1());
+                        ProgramManager.getInstance().SwitchScreen(this, new Form1());
                     }
                     else
                     {
@@ -77,7 +74,8 @@ namespace OOP
 
         private void btnBack_Click_1(object sender, EventArgs e)
         {
-            programManager.SwitchScreen(this, new Form1());
+            
+            ProgramManager.getInstance().SwitchScreen(this, new Form1());
         }
     }
 }

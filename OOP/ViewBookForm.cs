@@ -16,10 +16,6 @@ namespace OOP
 
         private Int64 id;
 
-        private DbHandler dbHandler = null;
-        private ProgramManager programManager = new ProgramManager();
-        private Values values = new Values();
-
         public ViewBookForm()
         {
             InitializeComponent();
@@ -32,7 +28,6 @@ namespace OOP
 
         private void ViewBookForm_Load(object sender, EventArgs e)
         {
-            dbHandler = new DbHandler(values.getConnectionString());
             panelBookAlter.Visible = false;
             makeView();
         }
@@ -47,7 +42,7 @@ namespace OOP
 
                 DataSet mDataSet = new DataSet();
 
-                mDataSet = dbHandler.Select("SELECT * FROM books WHERE bookID = " + id);
+                mDataSet = DbHandler.getInstance().Select("SELECT * FROM books WHERE bookID = " + id);
 
                 tbBookName.Text = mDataSet.Tables[0].Rows[0][1].ToString();
                 tbBookAuthor.Text = mDataSet.Tables[0].Rows[0][2].ToString();
@@ -69,14 +64,14 @@ namespace OOP
 
         private void btnX_Click(object sender, EventArgs e)
         {
-            programManager.Close(this);
+            ProgramManager.getInstance().Close(this);
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Are you sure you want to delete item?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) 
             {
-                dbHandler.Delete("DELETE FROM books WHERE bookID=" + this.id + "");
+                DbHandler.getInstance().Delete("DELETE FROM books WHERE bookID=" + this.id + "");
                 MessageBox.Show("Item deleted!\n\n Refresh table!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }       
         }
@@ -87,7 +82,7 @@ namespace OOP
             {
                 DataSet mDataSet = new DataSet();
 
-                mDataSet = dbHandler.Select("SELECT * FROM books WHERE bookName LIKE '%" + tbBookNameSearch.Text + "%'");
+                mDataSet = DbHandler.getInstance().Select("SELECT * FROM books WHERE bookName LIKE '%" + tbBookNameSearch.Text + "%'");
 
                 dgvViewBooks.DataSource = mDataSet.Tables[0];
             }
@@ -100,7 +95,7 @@ namespace OOP
         private void makeView()
         {
             tbBookNameSearch.Text = "";
-            dgvViewBooks.DataSource = dbHandler.populateDataGridView("SELECT * FROM books");
+            dgvViewBooks.DataSource = DbHandler.getInstance().populateDataGridView("SELECT * FROM books");
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
@@ -117,7 +112,7 @@ namespace OOP
                     string bookAuthorUpdate = tbBookAuthor.Text;
                     string bookPublicationUpdate = tbBookPublication.Text;
                     int bookQuantityUpdate = int.Parse(tbBookQuantity.Text.ToString());
-                    dbHandler.Update("UPDATE books SET bookName='" + bookNameUpdate + "', bookAuthor='" + bookAuthorUpdate + "',bookPublication='" + bookPublicationUpdate + "', bookQuantity=" + bookQuantityUpdate + " WHERE bookID =" + this.id + "");
+                    DbHandler.getInstance().Update("UPDATE books SET bookName='" + bookNameUpdate + "', bookAuthor='" + bookAuthorUpdate + "',bookPublication='" + bookPublicationUpdate + "', bookQuantity=" + bookQuantityUpdate + " WHERE bookID =" + this.id + "");
                     MessageBox.Show("Book updated!\n\n Please refresh data.", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 

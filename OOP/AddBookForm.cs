@@ -12,10 +12,6 @@ namespace OOP
 {
     public partial class AddBookForm : Form
     {
-        private Values values = new Values();
-
-        private ProgramManager programManager = new ProgramManager();
-        private DbHandler dbHandler = null;
         public AddBookForm()
         {
             InitializeComponent();
@@ -23,7 +19,7 @@ namespace OOP
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            programManager.Close(this);
+            ProgramManager.getInstance().Close(this);
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -36,7 +32,7 @@ namespace OOP
             if (tbBookName.Text != "" && tbBookAuthor.Text != "" && tbBookPublication.Text != "" && tbBookQuantity.Text != "")
             {
                 string sqlQuery = "INSERT INTO books (bookName, bookAuthor, bookPublication, bookQuantity) VALUES ('" + tbBookName.Text + "', '" + tbBookAuthor.Text + "', '" + tbBookPublication.Text + "', " + int.Parse(tbBookQuantity.Text) + ")";
-                dbHandler.Insert(sqlQuery);
+                DbHandler.getInstance().Insert(sqlQuery);
                 MessageBox.Show("Book Inserted", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 resetFields();
             }
@@ -56,7 +52,7 @@ namespace OOP
 
         private void AddBookForm_Load(object sender, EventArgs e)
         {
-            dbHandler = new DbHandler(values.getConnectionString());
+            //empty
         }
     }
 }

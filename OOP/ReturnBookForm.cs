@@ -12,13 +12,6 @@ namespace OOP
 {
     public partial class ReturnBookForm : Form
     {
-        ProgramManager programManager = new ProgramManager();
-
-        DbHandler dbHandler = null;
-
-        Values values = new Values();
-
-        UserHelper userHelper = UserHelper.getInstance;
         public ReturnBookForm()
         {
             InitializeComponent();
@@ -26,12 +19,11 @@ namespace OOP
 
         private void btnX_Click(object sender, EventArgs e)
         {
-            programManager.Close(this);
+            ProgramManager.getInstance().Close(this);
         }
 
         private void ReturnBookForm_Load(object sender, EventArgs e)
         {
-            dbHandler = new DbHandler(values.getConnectionString());
             Clear();
         }
 
@@ -47,12 +39,12 @@ namespace OOP
             {
                 DataSet mDataSet = new DataSet();
 
-                mDataSet = dbHandler.Select("SELECT * FROM student WHERE enrollment='" + enrollment + "'");
+                mDataSet = DbHandler.getInstance().Select("SELECT * FROM student WHERE enrollment='" + enrollment + "'");
 
                 if (mDataSet.Tables[0].Rows.Count > 0)
                 {
                     int studentId = int.Parse(mDataSet.Tables[0].Rows[0][0].ToString());
-                    dgvIssuedBooks.DataSource = dbHandler.populateDataGridView("SELECT borrowID, takenDate, bookName, studentName FROM BookBorrow, books, student WHERE BookBorrow.bookID = books.bookID AND BookBorrow.studentID=student.studentID AND student.studentID=" + studentId + " AND BookBorrow.studentID=" + studentId + "");
+                    dgvIssuedBooks.DataSource = DbHandler.getInstance().populateDataGridView("SELECT borrowID, takenDate, bookName, studentName FROM BookBorrow, books, student WHERE BookBorrow.bookID = books.bookID AND BookBorrow.studentID=student.studentID AND student.studentID=" + studentId + " AND BookBorrow.studentID=" + studentId + "");
                 }
                 else
                 {
@@ -79,15 +71,15 @@ namespace OOP
             {
                 string builder = "";
                 DataSet mDataSet = new DataSet();
-                userHelper.borrowBookID = int.Parse(dgvIssuedBooks.Rows[e.RowIndex].Cells[0].Value.ToString());
-                mDataSet = dbHandler.Select("SELECT * FROM BookBorrow WHERE borrowID=" + userHelper.borrowBookID + "");
+                UserHelper.getInstance().borrowBookID = int.Parse(dgvIssuedBooks.Rows[e.RowIndex].Cells[0].Value.ToString());
+                mDataSet = DbHandler.getInstance().Select("SELECT * FROM BookBorrow WHERE borrowID=" + UserHelper.getInstance().borrowBookID + "");
 
                 builder = builder + mDataSet.Tables[0].Rows[0][1].ToString() + " ";
 
-                userHelper.studentID = int.Parse(mDataSet.Tables[0].Rows[0][5].ToString());
-                userHelper.bookID = int.Parse(mDataSet.Tables[0].Rows[0][4].ToString());
+                UserHelper.getInstance().studentID = int.Parse(mDataSet.Tables[0].Rows[0][5].ToString());
+                UserHelper.getInstance().bookID = int.Parse(mDataSet.Tables[0].Rows[0][4].ToString());
 
-                mDataSet = dbHandler.Select("SELECT * FROM books WHERE bookID=" + userHelper.bookID + "");
+                mDataSet = DbHandler.getInstance().Select("SELECT * FROM books WHERE bookID=" + UserHelper.getInstance().bookID + "");
 
                 builder = builder + " " + mDataSet.Tables[0].Rows[0][1].ToString();
                 tbBookData.Text = builder;
@@ -102,14 +94,14 @@ namespace OOP
         {
             if (MessageBox.Show("Are you sure you want to return the book?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                dbHandler.Delete("DELETE FROM BookBorrow WHERE borrowID=" + userHelper.borrowBookID + "");
+                DbHandler.getInstance().Delete("DELETE FROM BookBorrow WHERE borrowID=" + UserHelper.getInstance().borrowBookID + "");
 
                 DataSet mDataSet = new DataSet();
-                mDataSet = dbHandler.Select("SELECT bookQuantity FROM books WHERE bookID=" + userHelper.bookID + "");
+                mDataSet = DbHandler.getInstance().Select("SELECT bookQuantity FROM books WHERE bookID=" + UserHelper.getInstance().bookID + "");
 
                 int quantity = int.Parse(mDataSet.Tables[0].Rows[0][0].ToString());
                 quantity = quantity + 1;
-                dbHandler.Update("UPDATE books SET bookQuantity=" + quantity + " WHERE bookID=" + userHelper.bookID + "");
+                DbHandler.getInstance().Update("UPDATE books SET bookQuantity=" + quantity + " WHERE bookID=" + UserHelper.getInstance().bookID + "");
 
                 MessageBox.Show("You have returned your book!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }

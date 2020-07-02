@@ -9,6 +9,23 @@ namespace OOP
 {
     class ProgramManager
     {
+
+        private static ProgramManager instance = null;
+
+        private ProgramManager()
+        {
+            //empty private constructor
+        }
+
+
+        public static ProgramManager getInstance()
+        {
+            if (instance == null)
+            {
+                instance = new ProgramManager();
+            }
+            return instance;
+        }
         public void Exit()
         {
             if (MessageBox.Show("Are you sure you want to exit?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)

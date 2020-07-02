@@ -14,11 +14,6 @@ namespace OOP
     {
         private Int64 id;
 
-        private Values values = new Values();
-
-        private DbHandler dbHandler = null;
-
-        private ProgramManager programManager = new ProgramManager();
         public ViewStudentsForm()
         {
             InitializeComponent();
@@ -26,7 +21,6 @@ namespace OOP
 
         private void ViewStudentsForm_Load(object sender, EventArgs e)
         {
-            dbHandler = new DbHandler(values.getConnectionString());
             panelUpdateStudents.Visible = false;
             makeView();
         }
@@ -34,7 +28,7 @@ namespace OOP
         private void makeView()
         {
             tbSearchStudents.Text = "";
-            dgvViewStudents.DataSource = dbHandler.populateDataGridView("SELECT * FROM student");
+            dgvViewStudents.DataSource = DbHandler.getInstance().populateDataGridView("SELECT * FROM student");
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -44,48 +38,55 @@ namespace OOP
 
         private void btnX_Click(object sender, EventArgs e)
         {
-            programManager.Close(this);
+            ProgramManager.getInstance().Close(this);
         }
 
         private void dgvViewStudents_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dgvViewStudents.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString() != "")
+            if (e.RowIndex == -1)
             {
-                setComboBoxData();
-                int id = int.Parse(dgvViewStudents.Rows[e.RowIndex].Cells[0].Value.ToString());
-
-                panelUpdateStudents.Visible = true;
-
-                DataSet mDataSet = new DataSet();
-
-                mDataSet = dbHandler.Select("SELECT * FROM student WHERE studentID = " + id);
-
-                tbStudentNameUpdate.Text = mDataSet.Tables[0].Rows[0][1].ToString();
-                dtpBirthdateUpdate.Value = DateTime.Parse(mDataSet.Tables[0].Rows[0][2].ToString());
-
-                if (mDataSet.Tables[0].Rows[0][3].ToString() == "Male")
-                {
-                    cbGenderUpdate.SelectedValue = "Male";
-                }
-                else
-                {
-                    cbGenderUpdate.SelectedValue = "Female";
-                }
-
-                tbStudentClassUpdate.Text = mDataSet.Tables[0].Rows[0][4].ToString();
-
-                this.id = Int64.Parse(mDataSet.Tables[0].Rows[0][0].ToString());
+                MessageBox.Show("Wrong selection!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
-                MessageBox.Show("Wrong selection!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (dgvViewStudents.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString() != "")
+                {
+                    setComboBoxData();
+                    int id = int.Parse(dgvViewStudents.Rows[e.RowIndex].Cells[0].Value.ToString());
+
+                    panelUpdateStudents.Visible = true;
+
+                    DataSet mDataSet = new DataSet();
+
+                    mDataSet = DbHandler.getInstance().Select("SELECT * FROM student WHERE studentID = " + id);
+
+                    tbStudentNameUpdate.Text = mDataSet.Tables[0].Rows[0][1].ToString();
+                    dtpBirthdateUpdate.Value = DateTime.Parse(mDataSet.Tables[0].Rows[0][2].ToString());
+
+                    if (mDataSet.Tables[0].Rows[0][3].ToString() == "Male")
+                    {
+                        cbGenderUpdate.SelectedValue = "Male";
+                    }
+                    else
+                    {
+                        cbGenderUpdate.SelectedValue = "Female";
+                    }
+
+                    tbStudentClassUpdate.Text = mDataSet.Tables[0].Rows[0][4].ToString();
+
+                    this.id = Int64.Parse(mDataSet.Tables[0].Rows[0][0].ToString());
+                }
+                else
+                {
+                    MessageBox.Show("Wrong selection!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
         private void setComboBoxData()
         {
             var list = new BindingList<KeyValuePair<string, string>>();
 
-            list = values.getComboBoxItems();
+            list = Values.getInstance().getComboBoxItems();
 
             cbGenderUpdate.DataSource = list;
             cbGenderUpdate.ValueMember = "Value";
@@ -107,7 +108,7 @@ namespace OOP
                     string studentBirthdateUpdate = dtpBirthdateUpdate.Value.ToShortDateString();
                     string studentGenderUpdate = cbGenderUpdate.SelectedValue.ToString();
                     string studentClassUpdate = tbStudentClassUpdate.Text;
-                    dbHandler.Update("UPDATE student SET studentName='" + studentNameUpdate + "', birthdate='" + studentBirthdateUpdate + "',gender='" + studentGenderUpdate + "', class='" + studentClassUpdate + "' WHERE studentID =" + this.id + "");
+                    DbHandler.getInstance().Update("UPDATE student SET studentName='" + studentNameUpdate + "', birthdate='" + studentBirthdateUpdate + "',gender='" + studentGenderUpdate + "', class='" + studentClassUpdate + "' WHERE studentID =" + this.id + "");
                     MessageBox.Show("Student updated!\n\n Please refresh data.", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
@@ -127,7 +128,7 @@ namespace OOP
         {
             if (MessageBox.Show("Are you sure you want to delete item?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                dbHandler.Delete("DELETE FROM student WHERE studentID=" + this.id + "");
+                DbHandler.getInstance().Delete("DELETE FROM student WHERE studentID=" + this.id + "");
                 MessageBox.Show("Item deleted!\n\n Refresh table!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
@@ -138,7 +139,7 @@ namespace OOP
             {
                 DataSet mDataSet = new DataSet();
 
-                mDataSet = dbHandler.Select("SELECT * FROM student WHERE studentName LIKE '%" + tbSearchStudents.Text + "%'");
+                mDataSet = DbHandler.getInstance().Select("SELECT * FROM student WHERE studentName LIKE '%" + tbSearchStudents.Text + "%'");
 
                 dgvViewStudents.DataSource = mDataSet.Tables[0];
             }

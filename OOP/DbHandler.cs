@@ -8,15 +8,31 @@ using System.Threading.Tasks;
 
 namespace OOP
 {
-    class DbHandler
+    sealed class DbHandler //singleton class
     {
+        private static DbHandler instance = null;
+
+        private DbHandler()
+        {
+            //empty private constructor
+        }
+
+
+        public static DbHandler getInstance()
+        {
+            if (instance == null)
+            {
+                instance = new DbHandler();
+            }
+            return instance;
+        }
         private SqlConnection sqlConnection = new SqlConnection();
         private SqlCommand sqlCommand = null;
         private SqlDataAdapter sqlDataAdapter = null;
         private DataSet dataSet = null;
         private SqlDataReader sqlDataReader = null;
 
-        private Values values = new Values();
+        private string connectionString = Values.getInstance().getConnectionString();
 
         private void initialize()
         {
@@ -24,11 +40,6 @@ namespace OOP
             this.dataSet = new DataSet();
         }
 
-        private string connectionString = "";
-        public DbHandler(string connectionString)
-        {
-            this.connectionString = connectionString;
-        }
         private void Connect()
         {
             this.initialize();

@@ -10,19 +10,19 @@ namespace OOP
     class UserHelper //singleton class to store current operator
     {
 
-        private static readonly UserHelper instance = new UserHelper();
-
+        private static UserHelper instance = null;
         private UserHelper()
         {
             //empty
         }
 
-        public static UserHelper getInstance
+        public static UserHelper getInstance()
         {
-            get
+            if (instance == null)
             {
-                return instance;
+                instance = new UserHelper();
             }
+            return instance;
         }
         public int userID;
         public int bookID;

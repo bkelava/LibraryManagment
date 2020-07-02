@@ -14,11 +14,9 @@ namespace OOP
     {
         private string key = "";
 
-        private Values values = new Values();
 
         private DbHandler dbHandler = null;
 
-        private ProgramManager programManager = new ProgramManager();
         public StudentForm()
         {
             InitializeComponent();
@@ -27,14 +25,13 @@ namespace OOP
         private void StudentForm_Load(object sender, EventArgs e)
         {
             setComboBoxData();
-            dbHandler = new DbHandler(values.getConnectionString());
         }
 
         private void setComboBoxData()
         {
             var list = new BindingList<KeyValuePair<string, string>>();
 
-            list = values.getComboBoxItems();
+            list = Values.getInstance().getComboBoxItems();
 
             cbGender.DataSource = list;
             cbGender.ValueMember = "Value";
@@ -44,7 +41,7 @@ namespace OOP
 
         private void btnExit_Click(object sender, EventArgs e)
         {
-            programManager.Close(this);
+            ProgramManager.getInstance().Close(this);
         }
 
         private void btnReset_Click(object sender, EventArgs e)
@@ -92,7 +89,7 @@ namespace OOP
 
         private void btnGenerateKey_Click(object sender, EventArgs e)
         {
-            this.key = "stu-"+values.generateKey().ToString();
+            this.key = "stu-"+Values.getInstance().generateKey().ToString();
             tbEnrollmentKey.Text = key.ToString();
         }
     }

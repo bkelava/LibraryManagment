@@ -15,12 +15,6 @@ namespace OOP
     {
 
         private DataSet mDataSet = null;
-        private DbHandler dbHandler = null;
-        private ProgramManager programManager = new ProgramManager();
-
-        private UserHelper userHelper = UserHelper.getInstance;
-
-        private Values values = new Values();
 
         public Form1()
         {
@@ -29,12 +23,12 @@ namespace OOP
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            dbHandler = new DbHandler(values.getConnectionString());
+            //empty
         }
 
         private void tbUserName_MouseClick(object sender, MouseEventArgs e)
         {
-            if (tbUserName.Text == values.getUsernameText())  
+            if (tbUserName.Text == Values.getInstance().getUsernameText())  
             {
                 tbUserName.Clear();
             }
@@ -42,22 +36,22 @@ namespace OOP
 
         private void pbInstagram_MouseClick(object sender, MouseEventArgs e)
         {
-            System.Diagnostics.Process.Start(values.getInstagramUrl());
+            System.Diagnostics.Process.Start(Values.getInstance().getInstagramUrl());
         }
 
         private void pbFacebook_MouseClick(object sender, MouseEventArgs e)
         {
-            System.Diagnostics.Process.Start(values.getFacebookUrl());
+            System.Diagnostics.Process.Start(Values.getInstance().getFacebookUrl());
         }
 
         private void pbYoutube_MouseClick(object sender, MouseEventArgs e)
         {
-            System.Diagnostics.Process.Start(values.getYoutubeUrl());
+            System.Diagnostics.Process.Start(Values.getInstance().getYoutubeUrl());
         }
 
         private void btnX_MouseClick(object sender, MouseEventArgs e)
         {
-            programManager.Exit();
+            ProgramManager.getInstance().Exit();
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -67,7 +61,7 @@ namespace OOP
 
         private void btnSignUp_Click(object sender, EventArgs e)
         {
-            programManager.SwitchScreen(this, new SignUp());
+            ProgramManager.getInstance().SwitchScreen(this, new SignUp());
             
         }
 
@@ -77,17 +71,16 @@ namespace OOP
 
             string userName = tbUserName.Text;
             string password = tbPassword.Text;
-            mDataSet = dbHandler.Select("SELECT * FROM loginTable WHERE username = '" + userName + "' AND password = '" + password + "'");
+            mDataSet = DbHandler.getInstance().Select("SELECT * FROM loginTable WHERE username = '" + userName + "' AND password = '" + password + "'");
 
-            userHelper.userID = int.Parse( mDataSet.Tables[0].Rows[0][0].ToString());
-
-            if (mDataSet.Tables[0].Rows.Count != 0)
+            if (mDataSet.Tables[0].Rows.Count == 0)
             {
-                programManager.SwitchScreen(this, new Dashboard());
+                MessageBox.Show("Wrong username or password!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
-                MessageBox.Show("Wrong username or password!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                UserHelper.getInstance().userID = int.Parse(mDataSet.Tables[0].Rows[0][0].ToString());
+                ProgramManager.getInstance().SwitchScreen(this, new Dashboard());
             }
         }
     }

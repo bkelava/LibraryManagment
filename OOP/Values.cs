@@ -7,8 +7,26 @@ using System.Threading.Tasks;
 
 namespace OOP
 {
-    class Values
+    sealed class Values
     {
+
+        private static Values instance = null;
+
+        private Values()
+        {
+            //empty private constructor
+        }
+
+
+        public static Values getInstance()
+        {
+            if (instance == null)
+            {
+                instance = new Values();
+            }
+            return instance;
+        }
+
         private string username = "Username";
 
         private string password = "Password";
